@@ -31,8 +31,8 @@ class Task():
     def get_reward(self):
         """Uses current pose of sim to return reward."""
         #reward = 1.-.3*(abs(self.sim.pose[:3] - self.target_pos)).sum()
-        reward = 1. - 0.06*(abs(self.sim.pose[2] - self.target_pos[2])) - 0.04*(abs(self.sim.pose[0:1] -self.target_pos[0:1])).sum() - 0.02*(abs(self.sim.pose[3:6])).sum()
-        '''
+        #reward = 1. - 0.06*(abs(self.sim.pose[2] - self.target_pos[2])) - 0.04*(abs(self.sim.pose[0:1] -self.target_pos[0:1])).sum() - 0.02*(abs(self.sim.pose[3:6])).sum()
+        
         alphaP = 1.
         alphaV = 1.
         reward = 0
@@ -42,7 +42,7 @@ class Task():
         reward += 1*(1- np.linalg.norm(self.sim.pose[:2] - [0.,0.]))
         # Penalise angular position
         reward += 1 *(1 - np.linalg.norm(self.sim.pose[3:] - [0., 0., 0.]))
-        '''
+        
         return reward
 
     def step(self, rotor_speeds):
