@@ -19,8 +19,8 @@ class Task():
         self.action_repeat = 3
 
         self.state_size = self.action_repeat * 6
-        self.action_low = 375 # constrain propeller speeds
-        self.action_high = 700
+        self.action_low = 500 # constrain propeller speeds
+        self.action_high = 900
         self.state_size = 18
             
         self.action_size = 4
@@ -32,7 +32,12 @@ class Task():
         """Uses current pose of sim to return reward."""
         #reward = 1.-.3*(abs(self.sim.pose[:3] - self.target_pos)).sum()
         #reward = 1. - 0.06*(abs(self.sim.pose[2] - self.target_pos[2])) - 0.04*(abs(self.sim.pose[0:1] -self.target_pos[0:1])).sum() - 0.02*(abs(self.sim.pose[3:6])).sum()
+        #print("distance z", abs(self.sim.pose[2] - self.target_pos[2]))
+        reward = 1. - 0.06*(abs(self.sim.pose[2] - self.target_pos[2])) - 0.04*(abs(self.sim.pose[:2] - self.target_pos[:2])).sum()- 0.02*(abs(self.sim.pose[3:6])).sum()
+ 
+        #reward -= 0.04*(abs(self.sim.pose[:2] - self.target_pos[:2]).sum()
         
+        """
         alphaP = 1.
         alphaV = 1.
         reward = 0
@@ -42,7 +47,7 @@ class Task():
         reward += 1*(1- np.linalg.norm(self.sim.pose[:2] - [0.,0.]))
         # Penalise angular position
         reward += 1 *(1 - np.linalg.norm(self.sim.pose[3:] - [0., 0., 0.]))
-        
+        """
         return reward
 
     def step(self, rotor_speeds):
